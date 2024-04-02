@@ -15,11 +15,21 @@ bits 16
     mov ah, 0x0E
     mov al, [si]
     .printc:
-        int 0x10
+        CALL_VIDEO
         inc si
         mov al, [si]
         cmp al, 0
         jne .printc
+%endmacro
+
+%macro endline 0
+    mov ah, 0x03
+    CALL_VIDEO
+    mov bh, 0
+    inc dh
+    mov dl, 0
+    mov ah, 0x02
+    CALL_VIDEO
 %endmacro
 
 write_line haha, "Hello world!"
