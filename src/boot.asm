@@ -11,28 +11,40 @@ bits 16
 ; Note: Cannot be executed in label(can't db inside label?)
 %macro write_line 2
     %1 db %2, 0
-    mov si, %1
+    mov si, 0
+    mov bh, 0
     mov ah, 0x0E
-    mov al, [si]
+    mov al, [%1 + si]
     .printc:
         CALL_VIDEO
         inc si
-        mov al, [si]
+        mov al, [%1 + si]
         cmp al, 0
         jne .printc
+        ret
 %endmacro
 
 %macro endline 0
     mov ah, 0x03
     CALL_VIDEO
-    mov bh, 0
     inc dh
     mov dl, 0
     mov ah, 0x02
     CALL_VIDEO
 %endmacro
 
-write_line haha, "Hello world!"
+uwu db "NBiggadclwakdhjaw", 0
+mov si, 0
+mov bh, 0
+mov ah, 0x0E
+mov al, [uwu + si]
+.printc:
+    CALL_VIDEO
+    inc si
+    mov al, [uwu + si]
+    cmp al, 0
+    jne .printc
+    ret
 
 hlt
 

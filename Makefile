@@ -11,3 +11,9 @@ build:
 	dd conv=notrunc if=build/boot.bin of=build/disk.img bs=512
 qemu: build
 	qemu-system-i386 -drive format=raw,file=build/disk.img -machine q35
+
+clean:
+	echo "Cleaning project..."
+	if [ -d "./build" ]; then \
+		rm -rf ./build; \
+	fi
